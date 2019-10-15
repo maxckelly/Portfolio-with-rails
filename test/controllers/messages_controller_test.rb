@@ -1,6 +1,38 @@
 require 'test_helper'
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
+
+  test "GET new" do
+    get new_message_url
+
+    assert_response :success
+
+    assert_select 'form' do
+      assert_select 'input[type=text]'
+      assert_select 'input[type=email]'
+      assert_select 'textarea'
+      assert_select 'input[type=submit]'
+    end
+  end
+
+  test "POST create" do
+    assert_difference 'ActionMailer::Base.deliveries.size', 1 do
+      post create_message_url, params: {
+        message: {
+          name: 'Max',
+          email: 'maxckel@gmail.com',
+          message: 'maxkelly'
+        }
+      }
+    end
+
+    assert_redirected_to new_message_url
+
+    follow_redirect!
+
+    assert_match /Message received, thanks!/, response.body
+  end
+
   test "invalid POST create" do 
     post create_message_url, params: {
       message: {
@@ -15,34 +47,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_match /Message .* blank/, response.body
 
   end
+
 end
 
 
-# test "GET new" do
-#   get new_message_url
 
-#   assert_response :success
-
-#   assert_select 'form' do
-#     assert_select 'input[type=text]'
-#     assert_select 'input[type=email]'
-#     assert_select 'textarea'
-#     assert_select 'input[type=submit]'
-#   end
-# end
-
-# test "POST create" do
-#   post create_message_url, params: {
-#     message: {
-#       name: 'Max',
-#       email: 'grnbr@gmail.com',
-#       body: 'maxkelly'
-#     }
-#   }
-
-#   assert_redirected_to new_message_url
-
-#   follow_redirect!
-
-#   assert_match /Message recieved, thanks!/, response.body
-# end

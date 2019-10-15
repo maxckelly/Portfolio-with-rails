@@ -3,14 +3,13 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
-  def create 
-
-    message_params = params.require(:message).permit(:name, :email, :message)
+  def create
     @message = Message.new message_params
 
     if @message.valid?
-      redirect_to new_message_url, notice: "Messaged recieved! Thanks"
-    else 
+      MessageMailer.contact_me(@message).deliver_now
+      redirect_to new_message_url, notice: "Message received, thanks!"
+    else
       render :new
     end
   end
@@ -19,5 +18,5 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:name, :email, :message)
-  end
+  end  
 end
