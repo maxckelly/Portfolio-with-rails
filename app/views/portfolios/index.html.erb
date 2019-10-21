@@ -1,0 +1,27 @@
+<body id="#portfolio-page">
+  <div class="portfolio-main-container">
+    <h1>Portfolio</h1>
+    <% @portfolios.each do |portfolio| %>
+      <div id="portfolio-item-one" class="portfolio-inner">
+        <div class="portfolio-img-container">
+          <%= image_tag @portfolio.picture class:"portfolio-image", width:"300" if @portfolio.picture.attached? %>
+          <div class="portfolio-circle"></div>
+        </div>
+        <div class="portfolio-text">
+          <%= portfolio.header %>
+          <br>
+          <%= portfolio.description %>
+          <a href="https://github.com/maxckelly/TheModernJavaScriptBootcamp" target="_blank">
+            <i class="fab fa-github-square portfolio-icons"></i>
+          </a>
+          <a href="https://maxhangman.netlify.com/" target="_blank">
+            <i class="fas fa-eye portfolio-icons"></i>
+          </a>
+          <i class="fab fa-js-square portfolio-icons"></i>
+          <i class="fab fa-html5 portfolio-icons"></i>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>
