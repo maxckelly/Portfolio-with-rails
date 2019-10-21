@@ -4,13 +4,13 @@
     <% @portfolios.each do |portfolio| %>
       <div id="portfolio-item-one" class="portfolio-inner">
         <div class="portfolio-img-container">
-          <%= image_tag @portfolio.picture class:"portfolio-image", width:"300" if @portfolio.picture.attached? %>
+          <%= image_tag portfolio.picture, class:"portfolio-image", width:"300" if portfolio.picture.attached? %>
           <div class="portfolio-circle"></div>
         </div>
         <div class="portfolio-text">
           <%= portfolio.header %>
           <br>
-          <%= portfolio.description %>
+          <p><%= portfolio.description %></p>
           <a href="https://github.com/maxckelly/TheModernJavaScriptBootcamp" target="_blank">
             <i class="fab fa-github-square portfolio-icons"></i>
           </a>
